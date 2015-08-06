@@ -10,7 +10,7 @@ HMM.Fisher.manuscript.pdf: A copy of HMM-Fisehr manuscript
 
 HMM.Fisher.code: A folder containing all R source code files used for HMM-Fisher.
 
-Comparing_five_DM_methods.manuscript.pdf: A copy of manuscript comparing five differential methylation detection methods
+Comparing_five_DM_methods.manuscript.pdf: A copy of the manuscript comparing five differential methylation detection methods
 
 example.data: A folder containing all example input data, an example.script.txt for running HMM-Fisher, and the output files generated from the example.script.txt.
 _____________________________________________________________________________________________________________
