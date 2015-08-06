@@ -5,33 +5,33 @@ HMM.Fisher<-function(total.reads, meth.reads,  n1,n2, chromosome, code.dir, outp
         #####################################################################################################################
 	# run HMM-DM with a single command
 	#
-	# 1. meth.reads: a matrix of methylation levels in two groups. col1, positions; col2-5, methylation levels for 4 samples in group 1, 
-	#                col6-9, methylation  levels for 4 samples in group 2.
-	# 2. total.reads: a matrix of covreage for all samples in two groups. col1, positions; col2-5, coverage for 4 samples in group 1, col6-9, 
-	#                coverage for 4 samples in group 2. Note that the positions and order of samples should correspond to those in mC.matrix.
-        # 3. n1:  Numeric. number of control samples
+	# 1. meth.reads: a matrix of methylation levels in two groups. getMeth() function will sort this matrix by position in ascending order. It has 1+n1+n2 columns: col1, positions; 
+        #                col2-(n1+1), methylation levels for n2 samples in group 1, col(n1+2)-(n1+n2+1), methylation  levels for n2 samples in group 2.
+	# 2. total.reads: a matrix of covreage for all samples in two groups. getMeth() function will sort this matrix by position in ascending order. It has 1+n1+n2 columns: col1, positions; 
+        #                col2-(n1+1), coverage for n1 samples in group 1, col(n1+2)-(n1+n2+1), coverage for n2 samples in group 2. Note that the positions 
+        #                and order of samples should correspond to those in mC.matrix.
+        # 3. n1:  Numeric. number of test samples
 	# 4. n2:  Numeric. number of control samples
-	# 5. chromosome:Character. The chromosome the users want to analyze, e.g., chromosome =1, or chromosome = 2.
-	# 6. code.dir: String. The directory of the source code files of HMM-DM (e.g., /home/HMM.DM/HMM.DM.code).
+	# 5. chromosome:Character. The chromosome that users want to analyze, e.g., chromosome =1, or chromosome = 2.
+	# 6. code.dir: String. The directory of the source code files of HMM-Fisher (e.g., /home/HMM.Fisher/HMM.Fisher.code).
 	#                Note, there should be no "/" at the very end.
-	# 7. output.dir: String. The directory for the output files (e.g., /home/HMM.DM.results). Note, there should be no "/" at the very end.
-	#                 Two matrices will be generated from this function. See section 3.2 for more detail. 
+	# 7. output.dir: String. The directory for the output files (e.g., /home/HMM.Fisher.results). Note, there should be no "/" at the very end.
+	#                 Two matrices will be generated from this function. See section 4 of the user manual for more detail. 
 	# 8. min.percent: Numeric. The CG sites should be covered in at least min.percent of the control samples AND of the test samples. 
 	#                 Otherwise, the CG sites are dropped. Default = 0.8.
 	# 9. iterations: Numeric. The number of iterations when running HMM-DM. Default = 60
-	# 10. dist.combine: Numeric. COncecutive CG sites with distance > dist.combine will not be combined in Fisher exact step. Default = 100bp
+	# 10. dist.combine: Numeric. Concecutive CG sites with distance > dist.combine will not be combined in Fisher exact step. Default = 100bp
 	# 11. p.threshold: Numeric.the threshold of p-value for significance. CG sites with p-value <= p.threshold will be identified as DM.
 	# 12. meanDiff.cut: Numeric. Minimum mean difference of methylation levels between the two groups to call a DM CG site. Default = 0.3
-	# 13. chromosome:Character. The chromosome the users want to analyze, e.g., chromosome =1, or chromosome = 2.
-	# 14. max.distance: Numeric. The maximum distance between any two DM CGs site within a DM region. Default = 100bp.
-	# 15. max.empty.CG: Numeric. The maximum number of CGs without coverage between any two DM CG sites within a DM region. Default = 3.
-	# 16. max.EM: Numeric. When combining two consecutive DM regions (with >=2 DM CGs), the maximum number of EM CG sites between these
+	# 13. max.distance: Numeric. The maximum distance between any two DM CGs site within a DM region. Default = 100bp.
+	# 14. max.empty.CG: Numeric. The maximum number of CGs without coverage between any two DM CG sites within a DM region. Default = 3.
+	# 15. max.EM: Numeric. When combining two consecutive DM regions (with >=2 DM CGs), the maximum number of EM CG sites between these
 	#            two DM regions. These EM CG sites can be 1) having a p-value >= p.threshold, but <= max.p; 
 	#            or 2) identified as DM by HMM-DM but with small meanDiff. Default = 1. 
-        #            Note: if either region is a singleton, only 1 EM CG is allowed.
-	# 17. max.p: Numeric. The maximum p-value for the EM included in the combined DM region. Default = 0.1.
-	# 18.singleton: Logical. Report the singletons or not in summarizing region step? If TRUE (default), the singletons will be 
-	#                reported in the HMM.DM.results.txt. See section 3.2 for more detail.
+        #            Note: if either of the two consecutive DM regions is a singleton, only 1 EM CG is allowed between them.
+	# 16. max.p: Numeric. The maximum p-value for the EM included in the combined DM region. Default = 0.1.
+	# 17.singleton: Logical. Report the singletons or not in summarizing region step? If TRUE (default), the singletons will be 
+	#                reported in the HMM.Fisher.results.txt. See section 4 for more detail.
         #####################################################################################################################
 
         library("msm")
@@ -49,7 +49,7 @@ HMM.Fisher<-function(total.reads, meth.reads,  n1,n2, chromosome, code.dir, outp
         source(paste(code.dir,"get.distance.status.R",sep="/"))
         source(paste(code.dir,"fisher.exact.R",sep="/"))
 
-	# The following scource code files are used to form regions 
+	# The following scource code files are used to form DM regions 
         source(paste(code.dir,"chr.DM.region.by.CG.HMM.fisher.R",sep="/"))
         source(paste(code.dir,"DM.region.combine.HMM.fisher.R",sep="/"))
         source(paste(code.dir, "get.DM.region.R",sep="/"))    
@@ -82,13 +82,13 @@ HMM.Fisher<-function(total.reads, meth.reads,  n1,n2, chromosome, code.dir, outp
         R<-iterations       
         G<-dim(mC.matrix)[1] # Number of CG sites we are concerned 
 
-        # vecotr to sane transtion probabilities
+        # vecotr to store transtion probabilities
         trans.p<-rep(0,9)
 
         ##########################################################
         # 2.1.1 seperate HMM chain for each sample
         # set the same seed for each sample
-        # estimate a single transition matrix using all 8 samples 
+        # estimate a single transition matrix using all 1+n1+n2 samples 
         ##########################################################         
          sample.H.list<-list()
          H.list<-list()
@@ -103,7 +103,7 @@ HMM.Fisher<-function(total.reads, meth.reads,  n1,n2, chromosome, code.dir, outp
 		  H<-sample(c(1, 2, 3), length(H.index), replace=T)
                   H.list<-c(H.list, list(H))
 
-                  # emtpy matrix to store udated H for each iteration            
+                  # emtpy matrix to store updated H for each iteration            
                   sample.H.list<-c(sample.H.list, list(matrix(rep(NA), nrow=R, ncol=length(H.index))))                  
 	   }
          # empty matrix to store joint probability
@@ -183,8 +183,8 @@ HMM.Fisher<-function(total.reads, meth.reads,  n1,n2, chromosome, code.dir, outp
         # 2.3 Define DM bases on p-value and mean differences
         #################################################################################
 	# calculate the meanDiff for each CG
-        mean1<-apply(mC.matrix[,2:(2+n1-1)],1, function(x) { return(mean(x[!is.na(x)]))})
-        mean2<-apply(mC.matrix[,(2+n1):(2+n1+n2-1)],1, function(x) { return(mean(x[!is.na(x)]))})
+        mean1<-apply(mC.matrix[,2:(n1+1)],1, function(x) { return(mean(x, na.rm=T))})
+        mean2<-apply(mC.matrix[,(2+n1):(n1+n2+1)],1, function(x) { return(mean(x, na.rm=T))})
         meanDiff.2<- round((mean1-mean2),4)
         meanDiff<-meanDiff.2[1:dim(HMM.results)[1]]
 

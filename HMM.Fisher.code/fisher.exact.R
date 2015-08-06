@@ -1,12 +1,12 @@
 fisher.exact<-function(HMM.results, mC.matrix, distance.status, n1, n2)
   {
         #####################################################################################################################
-	# run HMM-DM with a single command
+	# Fisher's exact test step for HMM-Fisher
 	#
 	# 1. HMM.results: resutls from HMM step of HMM-Fisher.
 	# 2. mC.matrix: methylation levels of all samples. This file is the output from function getMeth()
 	# 3. distance.status: output from function get.distance.status.
-        # 4. n1:  Numeric. number of control samples
+        # 4. n1:  Numeric. number of testsamples
 	# 5. n2:  Numeric. number of control samples
 	#
 	# output: matrix with 15 columns

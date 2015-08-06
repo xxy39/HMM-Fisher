@@ -1,15 +1,37 @@
 get.DM.region<-function(DM.type,chr.DM.status.matrix, raw.CG, chr, distance.threshold, empty.CG)
 {
-   # This function is used to get DM or hypo regions. It is called by chr.DM.region.by.CG.HMM.fisher()
+   # This function is used to get hyper or hypo DM regions. It is called by chr.DM.region.by.CG.HMM.fisher()
    # The basic idea of this function is: 
-   # Firstget the index (i.e., 1, 2, .., n) and then group those "indexs" into regions based on their distance. 
+   # First,get the index (i.e., 1, 2, .., n) and then group those "indexs" into regions based on their distance. 
    #
-   # Note 1: DM.type, the type of DM regions to summarize, 1 (DM) or -1 (hypo).
-   # Note 2: in "chr.DM.status.matrix", usually results from HMM.fisher. It has 22 columns: 
+   # Note 1: DM.type, the type of DM regions to summarize, 1 (hyper) or -1 (hypo).
+   # Note 2: chr.DM.status.matrix is the result from HMM.fisher. It has 22 columns:
+   #    column 1: chr
+   #    column 2: position of ith CG
+   #    column 3: position of (i+1)th CG. (if ith CG is not combined with (i+1)th CG, this column is "NA" )
+   #    column 4: p-value of fisher-exact test
+   #    column 5: estimated states for ith CG sites in control samples, seperated by ":"
+   #    column 6: estimated states for ith CG sites in test samples, seperated by ":"
+   #    column 7: estimated states for (i+1)th CG sites in control samples, seperated by ":". (if ith CG is not combined with (i+1)th CG, this column is "NA" )
+   #    column 8: estimated states for (i+1)th CG sites in test sampels seperated by ":". (if ith CG is not combined with (i+1)th CG, this column is "NA" )
+   #    column 9: raw mC levels for ith CG sites in control samples, seperated by ":"
+   #    column 10: raw mC levels for ith CG sites in test samples, seperated by ":"
+   #    column 11: raw mC levels for (i+1)th CG sites in control samples, seperated by ":". (if ith CG is not combined with (i+1)th CG, this column is "NA" )
+   #    column 12: raw mC levels for (i+1)th CG sites in test samples, seperated by ":". (if ith CG is not combined with (i+1)th CG, this column is "NA" )
+   #    column 13: posterior prob for ith CG sites in control samples, seperated by ":"
+   #    column 14: posterior prob for ith CG sites in test samples, seperated by ":"
+   #    column 15: posterior prob for (i+1)th CG sites in control samples, seperated by ":". (if ith CG is not combined with (i+1)th CG, this column is "NA" )
+   #    column 16: posterior prob for (i+1)th CG sites in test samples, seperated by ":". (if ith CG is not combined with (i+1)th CG, this column is "NA" )
+   #    column 17: meanDiff: (mean mC of control) - (mean mC of test)
+   #    column 18: raw DM state: 1: hyper (ER+ has higher mC); 0: EM (ER+ and ER- have similar mC); -1: hypo (ER- has higher mC).   
+   #    column 19: DM state (with meanDiff): 1: hyper (control has higher mC); 0: EM (two groups have similar mC); -1: hypo (test has higher mC).   
+   #    column 20: index of CG sites
+   #    column 21: mean coverage of control
+   #    column 22: mean coverage of test 
    # Note 3: "raw.CG", is a vector of all CG positions on that chr 
-   # Note 4: "chr", a numeric shows the chr number 
-   # Note 5: "distance.threshold", a numeric shows the threshold of physical distance. The CG sites with distance larger than this value won't be in the same region.
-   # Note 6: "empty.CG", a numeric shows the threshold of number of CGs without coverage between consecutive CG sites to combine together.
+   # Note 4: "chr", a numeric value shows the chr number 
+   # Note 5: "distance.threshold", a numeric value shows the threshold of physical distance. The CG sites with distance larger than this value won't be in the same region.
+   # Note 6: "empty.CG", a numeric value shows the threshold of number of CGs without coverage between consecutive CG sites to combine together.
    #
    # The output file has 10 columns, for example: 
    #  chr     start     end       len  DM      num.CG total.CG    ER+.ave.cov ER-.ave.cov   meandiff

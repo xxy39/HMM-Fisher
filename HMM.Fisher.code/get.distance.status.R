@@ -1,6 +1,6 @@
 get.distance.status<-function(positions, distance.cutoff)
  {
-    # This function is to code each CG sites based on the distance between itself and two flanking CG sites
+    # This function is to code each CG site based on the distance between itself and two flanking CG sites
     # coding system:
     # single: the distance between this CG sites and two flanking CG sites are both larger than distance.cutoff
     # left: the left flanking CG site is within distance.cutoff bp, while the right flanking CG site is  >distance.cutoff bp away.

@@ -1,17 +1,13 @@
 #######################################################################
-# example script for running HMM-Fisher using example data
-#
-# NOTE!!
-# there are TWO places that the users need to define by themselves:
-# 1) dir: the pathway to HMM.DM package
-# 2) output.dir: the directory where the users want to store the output results
+# July21 2015
+# HMM-fisher example code
 #######################################################################
 
 # define the directory of source code files and example data
 # Note: there is no "/" at the end
-dir<-"/home/xxy39/HMM.Fisher"   # The pathway to the HMM.Fisher package. The users need to modify this by themselves 
-code.dir<-paste(dir,"HMM.Fisher.code", sep="/"))
-exmaple.dir<-paste(dir,"example.data", sep="/"))
+dir<-"HMM-fisher/"   # The pathway to the HMM.Fisher package. The users need to modify this by themselves 
+code.dir<-paste(dir,"HMM.Fisher.code", sep="/")
+exmaple.dir<-paste(dir,"example.data", sep="/")
 
 # read in the exmaple total.reads file
 total.reads<-read.table(paste(exmaple.dir, "total.reads.txt", sep="/"))
@@ -21,12 +17,22 @@ meth.reads<-read.table(paste(exmaple.dir, "meth.reads.txt", sep="/"))
 
 
 # define the directory of output 
-output.dir<-"/home/xxy39"    # Note, this is only an example. The users need to modify it by themselves 
+output.dir<-"HMM-fisher/output”    # Note, this is only an example. The users need to modify it by themselves 
 
 
+# install msm pacakges
+install.packages("msm")
 # run HMM.Fisher method
 date()
-source(paste(code.dir, "HMM.Fisher.v3.txt", sep="/"))
-HMM.Fisher.3(total.reads, meth.reads, n.control=4,n.test=4, chromosome=1, code.dir, output.dir, min.percent=1)
+source(paste(code.dir, "HMM.Fisher.R", sep="/"))
+HMM.Fisher(total.reads, meth.reads, n1=4,n2=4, chromosome=1, code.dir, output.dir, min.percent=1)
 date()
 save.image()
+
+
+# plotDMRs.R and annotation.R
+R CMD BATCH '--args  mC.matrix.txt  DMRs.txt  c(26:27,59)  100  4  4  T  example.DMR.plot'   ../HMM.Fisher.code/plotDMRs.R
+
+R CMD BATCH '--args  DM.CG.txt  ../example.data/refGene.hg18.txt  1000  T  T  annotation.txt'   ../HMM.Fisher.code/annotation.R
+
+

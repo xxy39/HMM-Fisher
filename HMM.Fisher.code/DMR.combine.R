@@ -50,14 +50,14 @@ DMR.combine<-function( DM.type, regions, chr.DM.status.matrix, raw.CG, distance.
 
 		 if (length(between.CG.index)>0 && length(between.CG.index) <= num.CG.between && empty[i]<= empty.CG)
 		     {
-                              betweem.CG.state<-chr.DM.status.matrix[between.CG.index,19]
+                              between.CG.state<-chr.DM.status.matrix[between.CG.index,19]
 			      between.CG.raw.state<-chr.DM.status.matrix[between.CG.index,18]
-                              betweem.CG.p<-chr.DM.status.matrix[between.CG.index,4]
+                              between.CG.p<-chr.DM.status.matrix[between.CG.index,4]
 
                               vec<-rep(0,length(between.CG.index))
 			      for (j in 1:length(between.CG.index))
 			        {
-                                     if (betweem.CG.state[j]=="EM" && betweem.CG.p[j]<=p.threshold || between.CG.raw.state[j]==as.character(DM.type) )
+                                     if (between.CG.state[j]=="EM" && between.CG.p[j]<=p.threshold || between.CG.raw.state[j]==as.character(DM.type) )
 				      { vec[j]<-1}				     
 				}
 

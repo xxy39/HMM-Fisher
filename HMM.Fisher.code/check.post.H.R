@@ -1,6 +1,6 @@
 check.post.H<-function(sample.H.mat)
 { 
-  # This function is used to check that at each probe, how many 
+  # This function is used to check that at each CG site, how many 
   # times it has been identified as 1,2,3, which is not methylated, partly methylated, and fully methylated respectively
 
   GG<-dim(sample.H.mat)[2] # This is the number of CG sites

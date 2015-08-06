@@ -1,6 +1,6 @@
 gibbs.sample.1.ID<-function(H, Obs, mu, sigma2, trans, initial.pi, lower.limit, upper.limit)
 { 
-   # This function is used to update the states in the hidden sequence H for each individual: 1, 2, 3, 
+   # This function is used to update the methylation states (1,2,3) in the hidden sequence H for each individual. 
    # that is, 0, 1/2, 1, (not methylated, partly methylated, and fullly methylated respectively). 
    
   
