@@ -15,5 +15,5 @@ Comparing_five_DM_methods.manuscript.pdf: A copy of the manuscript comparing fiv
 example.data: A folder containing all example input data, an example.script.txt for running HMM-Fisher, and the output files generated from the example.script.txt.
 _____________________________________________________________________________________________________________
 
-Citation:
+How to cite us:
 Sun, S. & Yu, X. (2016). HMM-Fisher: identifying differential methylation using a hidden Markov model and Fisher’s exact test. Statistical Applications in Genetics and Molecular Biology,doi:10.1515/sagmb-2015-0076
