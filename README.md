@@ -6,7 +6,7 @@ HMM-Fisher requires R installed. Ideally it is run in a Linux/Unix system. This 
 _____________________________________________________________________________________________________________
 HMM.Fisher.user.manual.pdf: A copy of the user manual
 
-HMM.Fisher.sagmb-2015-0076.pdf: A copy of HMM-Fisehr manuscript
+HMM.Fisher.sagmb-2015-0076.pdf: A copy of HMM-Fisher manuscript
 
 HMM.Fisher.code: A folder containing all R source code files used for HMM-Fisher.
 
