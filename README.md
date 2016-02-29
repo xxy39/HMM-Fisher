@@ -17,6 +17,11 @@ ________________________________________________________________________________
 
 Sun, S. & Yu, X. (2016). HMM-Fisher: identifying differential methylation using a hidden Markov model and Fisher’s exact test. Statistical Applications in Genetics and Molecular Biology,doi:10.1515/sagmb-2015-0076
 
+**Contact us**
+
+Shuying Sun (ssun5211@yahoo.com)
+
+Xiaoqing Yu (yuxq1120@gmail.com)
 
 **Access to the published manuscripts**
 
