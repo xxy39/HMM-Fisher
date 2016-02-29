@@ -19,9 +19,7 @@ Sun, S. & Yu, X. (2016). HMM-Fisher: identifying differential methylation using 
 
 **Contact us**
 
-Shuying Sun (ssun5211@yahoo.com)
-
-Xiaoqing Yu (yuxq1120@gmail.com)
+Shuying Sun (ssun5211@yahoo.com) and Xiaoqing Yu (yuxq1120@gmail.com)
 
 **Access to the published manuscripts**
 
