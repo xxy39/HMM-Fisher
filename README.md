@@ -6,15 +6,22 @@ HMM-Fisher requires R installed. Ideally it is run in a Linux/Unix system. This 
 _____________________________________________________________________________________________________________
 HMM.Fisher.user.manual.pdf: A copy of the user manual
 
-HMM.Fisher.sagmb-2015-0076.pdf: A copy of HMM-Fisher manuscript
-
 HMM.Fisher.code: A folder containing all R source code files used for HMM-Fisher.
 
-Comparing_five_DM_methods.manuscript.pdf: A copy of the manuscript comparing five differential methylation detection methods
-
 example.data: A folder containing all example input data, an example.script.txt for running HMM-Fisher, and the output files generated from the example.script.txt.
+
+Simulation: A folder containing all R source code used for data simulating.
 _____________________________________________________________________________________________________________
 
-How to cite us:
+**How to cite us**
 
 Sun, S. & Yu, X. (2016). HMM-Fisher: identifying differential methylation using a hidden Markov model and Fisher’s exact test. Statistical Applications in Genetics and Molecular Biology,doi:10.1515/sagmb-2015-0076
+
+
+*Access to the published manuscripts**
+
+HMM-DM: http://www.ncbi.nlm.nih.gov/pubmed/26887041
+
+HMM-Fisher: http://www.ncbi.nlm.nih.gov/pubmed/26854292
+
+Comparing five DM methods: http://www.ncbi.nlm.nih.gov/pubmed/26910753
